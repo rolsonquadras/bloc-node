@@ -22,3 +22,8 @@
 
  # OS generated files
 .DS_Store
+
+test/bddtests/fabric/fixtures/fabric/crypto-config/
+test/bddtests/fabric/fixtures/fabric/channel/
+docker-compose.log
+coverage.txt
