@@ -14,6 +14,8 @@ import (
 
 // peer
 type peer interface {
+	// Init peer
+	Init()
 	// Start peer
 	Start() error
 }
@@ -36,7 +38,12 @@ func newCmd(p peer) *cobra.Command {
 			cmd.SilenceUsage = true
 			return start(p)
 		},
+		PersistentPreRun: func(cmd *cobra.Command, args []string) { initCmd(p) },
 	}
+}
+
+func initCmd(p peer) {
+	p.Init()
 }
 
 func start(p peer) error {

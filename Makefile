@@ -8,6 +8,7 @@
 # Supported Targets:
 #
 # all:                        runs unit and integration tests
+# clean:                      cleans the build area
 # lint:                       runs linters
 # checks:                     runs code checks
 # unit-test:                  runs unit tests
@@ -15,23 +16,38 @@
 # crypto-gen:                 generates crypto directory
 # channel-config-gen:         generates test channel configuration transactions and blocks
 # bddtests:                   run bddtests
+# blocnode-cli:               generate blocnode cli binary
+# blocnode-docker:            generate blocnode image
 #
 
 ARCH=$(shell go env GOARCH)
+GO_VER = $(shell grep "GO_VER" .ci-properties |cut -d'=' -f2-)
+ALPINE_VER ?= 3.9
+GO_TAGS ?=
 export GO111MODULE = on
 
 # Tool commands (overridable)
 DOCKER_CMD ?= docker
 
 # Local variables used by makefile
-PROJECT_NAME            = bloc-node
-CONTAINER_IDS           = $(shell docker ps -a -q)
-DEV_IMAGES              = $(shell docker images dev-* -q)
+PROJECT_NAME   = bloc-node
+CONTAINER_IDS  = $(shell docker ps -a -q)
+DEV_IMAGES     = $(shell docker images dev-* -q)
 
 # Fabric tools docker image (overridable)
 FABRIC_TOOLS_IMAGE   ?= hyperledger/fabric-tools
 FABRIC_TOOLS_VERSION ?= 2.0.0-alpha
 FABRIC_TOOLS_TAG     ?= $(ARCH)-$(FABRIC_TOOLS_VERSION)
+
+# Namespace for the blocnode image
+DOCKER_OUTPUT_NS     ?= trustbloc
+BLOC_NODE_IMAGE_NAME ?= bloc-node
+
+# Fabric peer ext docker image (overridable)
+FABRIC_PEER_EXT_IMAGE   ?= trustbloc/fabric-peer
+FABRIC_PEER_EXT_VERSION ?= 0.1.0-snapshot-5e03e3c
+FABRIC_PEER_EXT_TAG     ?= $(ARCH)-$(FABRIC_PEER_EXT_VERSION)
+
 
 checks: version license lint
 
@@ -46,8 +62,22 @@ all: checks unit-test bddtests
 unit-test: checks docker-thirdparty
 	@scripts/unit.sh
 
-bddtests: checks populate-fixtures docker-thirdparty
+bddtests: clean checks populate-fixtures docker-thirdparty blocnode-docker
 	@scripts/integration.sh
+
+blocnode-cli: clean
+	@echo "Building blocnode cli"
+	@mkdir -p ./build/bin
+	@go build -o .build/bin/blocnode github.com/trustbloc/bloc-node/cmd/blocnode
+
+blocnode-docker:
+	@docker build -f ./images/blocnode/fabric/Dockerfile --no-cache -t $(DOCKER_OUTPUT_NS)/$(BLOC_NODE_IMAGE_NAME):latest \
+	--build-arg FABRIC_PEER_EXT_IMAGE=$(FABRIC_PEER_EXT_IMAGE) \
+	--build-arg FABRIC_PEER_EXT_TAG=$(FABRIC_PEER_EXT_TAG) \
+	--build-arg GO_VER=$(GO_VER) \
+	--build-arg ALPINE_VER=$(ALPINE_VER) \
+	--build-arg GO_TAGS=$(GO_TAGS) \
+	--build-arg GOPROXY=$(GOPROXY) .
 
 crypto-gen:
 	@echo "Generating crypto directory ..."
@@ -83,4 +113,10 @@ ifneq ($(strip $(DEV_IMAGES)),)
 	@docker rmi $(DEV_IMAGES) -f
 endif
 
-.PHONY: checks lint license all unit-test version clean-images docker-thirdparty crypto-gen channel-config-gen populate-fixtures bddtests
+clean:
+	rm -Rf ./test/bddtests/fabric/docker-compose.log
+	rm -Rf ./test/bddtests/fabric/fixtures/fabric/channel
+	rm -Rf ./test/bddtests/fabric/fixtures/fabric/crypto-config
+	rm -Rf ./.build
+
+.PHONY: clean checks lint license all unit-test version clean-images docker-thirdparty crypto-gen channel-config-gen populate-fixtures bddtests

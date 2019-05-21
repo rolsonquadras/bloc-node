@@ -20,6 +20,9 @@ func (m *mockpeer) Start() error {
 	return m.err
 }
 
+func (m *mockpeer) Init() {
+}
+
 func TestBlocNodeCMD(t *testing.T) {
 	mockpeer := &mockpeer{}
 	cmd := newBlocNodeCLICmd(mockpeer)

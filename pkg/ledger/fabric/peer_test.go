@@ -48,6 +48,8 @@ func TestPeerStart(t *testing.T) {
 
 	go func() {
 		fabpeer := NewPeer()
+		require.NoError(t, os.Setenv("FABRIC_CFG_PATH", "./testutil/sampleconfig"))
+		fabpeer.Init()
 		require.NoError(t, fabpeer.Start(), "expected to successfully start peer")
 	}()
 

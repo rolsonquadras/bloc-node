@@ -21,6 +21,9 @@ func (m *mockpeer) Start() error {
 	return m.err
 }
 
+func (m *mockpeer) Init() {
+}
+
 func TestStart(t *testing.T) {
 	t.Run("test success", func(t *testing.T) {
 		mockpeer := &mockpeer{}
