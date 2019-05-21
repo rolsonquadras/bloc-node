@@ -14,4 +14,4 @@ PKGS=`go list github.com/trustbloc/bloc-node/... 2> /dev/null | \
                                                  grep -v /api | \
                                                  grep -v /protos`
 echo "Running unit tests..."
-FABRIC_SAMPLECONFIG_PATH="src/github.com/trustbloc/bloc-node/pkg/testutil/sampleconfig" go test $PKGS -count=1 -race -coverprofile=coverage.txt -covermode=atomic  -p 1 -timeout=10m
+FABRIC_SAMPLECONFIG_PATH="src/github.com/trustbloc/bloc-node/pkg/ledger/fabric/testutil/sampleconfig" go test $PKGS -count=1 -race -coverprofile=coverage.txt -covermode=atomic  -p 1 -timeout=10m

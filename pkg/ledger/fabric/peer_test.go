@@ -4,7 +4,7 @@ Copyright IBM Corp, SecureKey Technologies Inc. All Rights Reserved.
 SPDX-License-Identifier: Apache-2.0
 */
 
-package node
+package fabric
 
 import (
 	"io/ioutil"
@@ -29,11 +29,11 @@ func TestMain(m *testing.M) {
 
 }
 
-func TestStartCmd(t *testing.T) {
+func TestPeerStart(t *testing.T) {
 	defer viper.Reset()
 	g := NewGomegaWithT(t)
 
-	tempDir, err := ioutil.TempDir("", "startcmd")
+	tempDir, err := ioutil.TempDir("", "peerstart")
 	g.Expect(err).NotTo(HaveOccurred())
 	defer func() { require.NoError(t, os.RemoveAll(tempDir)) }()
 
@@ -47,9 +47,8 @@ func TestStartCmd(t *testing.T) {
 	require.NoError(t, msptesttools.LoadMSPSetupForTesting())
 
 	go func() {
-		cmd := startCmd()
-		cmd.SetArgs([]string{})
-		require.NoError(t, cmd.Execute(), "expected to successfully start command")
+		fabpeer := NewPeer()
+		require.NoError(t, fabpeer.Start(), "expected to successfully start peer")
 	}()
 
 	grpcProbe := func(addr string) bool {
@@ -61,10 +60,4 @@ func TestStartCmd(t *testing.T) {
 		return false
 	}
 	g.Eventually(grpcProbe("localhost:6051")).Should(BeTrue())
-}
-
-func TestCmd(t *testing.T) {
-	cmd := Cmd()
-	cmd.SetArgs([]string{})
-	require.NoError(t, cmd.Execute(), "expected to successfully start command")
 }
