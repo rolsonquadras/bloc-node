@@ -16,6 +16,8 @@ import (
 
 // peer
 type peer interface {
+	// Init peer
+	Init()
 	// Start peer
 	Start() error
 }
