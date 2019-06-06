@@ -4,17 +4,16 @@
 
 module github.com/trustbloc/bloc-node/test/bddtests/fabric
 
-replace github.com/hyperledger/fabric => github.com/trustbloc/fabric-mod v0.0.0-20190510235640-ff89b7580e81
+replace github.com/hyperledger/fabric => github.com/trustbloc/fabric-mod v0.0.0-20190605152521-6547615cb978
 
-replace github.com/hyperledger/fabric/extensions => github.com/trustbloc/fabric-mod/extensions v0.0.0-20190510235640-ff89b7580e81
+replace github.com/hyperledger/fabric/extensions => github.com/trustbloc/fabric-mod/extensions v0.0.0-20190605152521-6547615cb978
 
-replace github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric => github.com/trustbloc/fabric-sdk-go-ext/fabric v0.0.0-20190507173756-f4404fb70f73
+replace github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric => github.com/trustbloc/fabric-sdk-go-ext/fabric v0.0.0-20190528182243-b95c24511993
 
 require (
 	github.com/DATA-DOG/godog v0.7.13
-	github.com/hyperledger/fabric v1.4.1
+	github.com/hyperledger/fabric v2.0.0-alpha+incompatible
 	github.com/spf13/viper v1.0.2
-	github.com/sykesm/zap-logfmt v0.0.2 // indirect
-	github.com/trustbloc/fabric-peer-test-common v0.0.0-20190515153005-67b33fd24540
-	go.uber.org/zap v1.10.0 // indirect
+	github.com/trustbloc/fabric-peer-test-common v0.0.0-20190530161629-b93925e57103
+	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6 // indirect
 )

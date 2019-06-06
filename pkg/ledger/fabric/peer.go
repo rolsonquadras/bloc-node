@@ -10,8 +10,6 @@ import (
 	"strings"
 
 	"github.com/spf13/viper"
-
-	"github.com/hyperledger/fabric/peer/common"
 	"github.com/hyperledger/fabric/peer/node"
 )
 
@@ -37,10 +35,10 @@ func (l peer) Start() error {
 
 func (l peer) Init() {
 	// For environment variables.
-	viper.SetEnvPrefix(common.CmdRoot)
+	viper.SetEnvPrefix(node.CmdRoot)
 	viper.AutomaticEnv()
 	replacer := strings.NewReplacer(".", "_")
 	viper.SetEnvKeyReplacer(replacer)
 
-	common.InitCmd(nil, nil)
+	node.InitCmd(nil, nil)
 }
