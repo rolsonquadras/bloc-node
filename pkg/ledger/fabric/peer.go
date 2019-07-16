@@ -9,8 +9,8 @@ package fabric
 import (
 	"strings"
 
-	"github.com/spf13/viper"
 	"github.com/hyperledger/fabric/peer/node"
+	"github.com/spf13/viper"
 )
 
 // Peer fabric peer
