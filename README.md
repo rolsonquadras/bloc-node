@@ -1,10 +1,9 @@
 [![Release](https://img.shields.io/github/release/trustbloc/bloc-node.svg?style=flat-square)](https://github.com/trustbloc/bloc-node/releases/latest)
 
-[![Build Status](https://travis-ci.com/trustbloc/bloc-node.svg?branch=master)](https://travis-ci.com/trustbloc/bloc-node)
+[![Build Status](https://dev.azure.com/trustbloc/bloc-node/_apis/build/status/trustbloc.bloc-node?branchName=master)](https://dev.azure.com/trustbloc/bloc-node/_build/latest?definitionId=7&branchName=master)
 [![codecov](https://codecov.io/gh/trustbloc/bloc-node/branch/master/graph/badge.svg)](https://codecov.io/gh/trustbloc/bloc-node)
 [![Go Report Card](https://goreportcard.com/badge/github.com/trustbloc/bloc-node?style=flat-square)](https://goreportcard.com/report/github.com/trustbloc/bloc-node)
 [![codebeat badge](https://codebeat.co/badges/7635e61e-3eaf-4965-9785-26c2756ede77)](https://codebeat.co/projects/github-com-trustbloc-bloc-node-master)
-[![GolangCI](https://golangci.com/badges/github.com/trustbloc/bloc-node.svg)](https://golangci.com/r/github.com/trustbloc/bloc-node)
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://raw.githubusercontent.com/trustbloc/bloc-node/master/LICENSE)
 
