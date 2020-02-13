@@ -11,9 +11,10 @@ replace github.com/hyperledger/fabric/extensions => github.com/trustbloc/fabric-
 replace github.com/hyperledger/fabric-sdk-go/third_party/github.com/hyperledger/fabric => github.com/trustbloc/fabric-sdk-go-ext/fabric v0.0.0-20190528182243-b95c24511993
 
 require (
-	github.com/DATA-DOG/godog v0.7.13
+	github.com/cucumber/godog v0.8.1
 	github.com/hyperledger/fabric v2.0.0-alpha+incompatible
 	github.com/spf13/viper v1.0.2
-	github.com/trustbloc/fabric-peer-test-common v0.0.0-20190530161629-b93925e57103
-	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6 // indirect
+	github.com/trustbloc/fabric-peer-test-common v0.1.2-0.20200213155832-06af5163b73f
 )
+
+go 1.13
